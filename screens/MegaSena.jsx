@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, SafeAreaView } from 'react-native';
 import { Button, Card, Text } from 'react-native-paper';
+import { ScrollView } from 'react-native';
 
 export default function MegaSena() {
   const [numeros, setNumeros] = useState([]);
+  const [historico, setHistorico] = useState([]);
 
   function gerar() {
     const listaNumeros = [];
@@ -12,9 +14,12 @@ export default function MegaSena() {
       listaNumeros.push(numeroAleatorio);
     }
     setNumeros(listaNumeros);
+    setHistorico([...historico,listaNumeros])
   }
 
   return (
+    <ScrollView>
+
     <SafeAreaView style={styles.container}>
       <Text style={styles.titulo}>Gerador da Mega Sena</Text>
 
@@ -31,7 +36,10 @@ export default function MegaSena() {
       <Button mode="contained" onPress={gerar} style={styles.botao}>
         Gerar números
       </Button>
+      <Text variant='displaySmall' >Historico</Text>
+      {historico.map(jogo=><Text variant='labelLarge' > {jogo.join('-')} </Text>)}
     </SafeAreaView>
+    </ScrollView>
   );
 }
 
